@@ -4,7 +4,8 @@
   "description": "A ODT template service",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

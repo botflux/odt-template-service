@@ -1,0 +1,28 @@
+{
+  "name": "odt-template-service",
+  "version": "1.0.0",
+  "description": "A ODT template service",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/botflux/odt-template-service.git"
+  },
+  "author": "Victor Mendele <victor.mendele68@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/botflux/odt-template-service/issues"
+  },
+  "homepage": "https://github.com/botflux/odt-template-service#readme",
+  "devDependencies": {
+    "jest": "^24.3.1",
+    "supertest": "^3.4.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-fileupload": "^1.1.2-alpha.1"
+  }
+}

@@ -1,3 +1,5 @@
+const isODT = require('../helpers/is-odt')
+
 /**
  * Functions used to construct routes are using the pattern make[Method][RouteName].
  * Dependencies need to be passed by the dependency object of the route factory. 
@@ -17,7 +19,7 @@ const makeGetIndex = ({} = {}) => (req, res) => {
  * 
  * @param {{*}} dependencies The dependencies used by this route
  */
-const makePostIndex = ({ isODT } = {}) => (req, res) => {
+const makePostIndex = ({ } = {}) => (req, res) => {
     const { files = {} } = req
     // Even if we add a default value while destructuring, we need to add a fallback
     // because the value can be null.

@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const fileupload = require('express-fileupload')
 
 /* Routes dependencies */
-const isODT = require('./helpers/is-odt')
  /* ! */
 
 // Initialize the express app
@@ -32,6 +31,6 @@ app.use(bodyParser.urlencoded({
 
 app.route('/')
     .get(defaultRouter.makeGetIndex())
-    .post(defaultRouter.makePostIndex({ isODT }))
+    .post(defaultRouter.makePostIndex())
 
 module.exports = app

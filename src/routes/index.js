@@ -1,4 +1,5 @@
 const isODT = require('../helpers/is-odt')
+const isJSON = require('../helpers/is-json')
 
 /**
  * Functions used to construct routes are using the pattern make[Method][RouteName].
@@ -44,6 +45,12 @@ const makePostIndex = ({ } = {}) => (req, res) => {
         return res
             .status(400)
             .send('A context must be sent')
+    }
+
+    if (!isJSON(context)) {
+        return res
+            .status(400)
+            .send('The passed context is not in JSON format')
     }
 
     return res.json({

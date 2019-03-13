@@ -1,7 +1,7 @@
 const { Transform } = require('stream')
 
-const makeReplacer = (context = {}) => {
-    const regex = /{{(\s)*(?<name>([a-z]|[A-Z]|[0-9])*)(\s)*}}/g
+const makeReplacer = (context = {}, { openingTag = '{{', closingTag = '}}' } = {}) => {
+    const regex = new RegExp(`${openingTag}(\\s)*(?<name>([a-z]|[A-Z]|[0-9])*)(\\s)*${closingTag}`, 'g')
 
     return new Transform ({
         transform (chunk, encoding, callback) {
@@ -14,7 +14,7 @@ const makeReplacer = (context = {}) => {
             const result = 
                 (str.match(regex) || [])
                 .map(m => ({ 
-                    varName: m.replace(/{/g, '').replace(/}/g, '').trim(),
+                    varName: m.replace(new RegExp(openingTag, 'g'), '').replace(new RegExp(closingTag, 'g'), '').trim(),
                     varString: m
                 }))
                 .reduce((prev, { varName, varString }) => {

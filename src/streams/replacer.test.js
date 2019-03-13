@@ -91,4 +91,21 @@ describe('#replacer', () => {
                 done()
             })
     })
+
+    it ('replaces the variable when the configuration specify custom tags', done => {
+        const mockStream = makeReadableStream('{# name #}')
+        const replacer = replacerStream({
+            name: 'Jeff'
+        }, {
+            openingTag: '{#',
+            closingTag: '#}'
+        })
+
+        mockStream
+            .pipe(replacer)
+            .once('data', chunk => {
+                expect(chunk.toString()).toBe('Jeff')
+                done()
+            })
+    })
 })

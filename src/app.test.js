@@ -44,6 +44,17 @@ describe('testing app routes', () => {
                         expect(response.text).toBe('A context must be sent')
                     })
             })
+
+            it ('returns a 400 when context is not a json', () => {
+                return request(app)
+                    .post('/')
+                    .attach('template', 'test/files/odt-file.odt')
+                    .field('context', 'not a json')
+                    .then(response => {
+                        expect(response.statusCode).toBe(400)
+                        expect(response.text).toBe('The passed context is not in JSON format')
+                    })
+            })
         })
     })
 })

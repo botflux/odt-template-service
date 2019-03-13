@@ -4,13 +4,6 @@ const fs = require('fs')
 
 /** Route dependencies */
 
-/**
- * Generate a non odt file
- */
-const makeNonODTFile = () => {
-    return fs.readFileSync('test/files/text-file.txt')
-}
-
 describe('testing app routes', () => {
     describe('app index', () => {
         it('get', () => {
@@ -35,10 +28,20 @@ describe('testing app routes', () => {
             it ('returns a 400 when the file is not a ODT', () => {
                 return request(app)
                     .post('/')
-                    .attach('template', makeNonODTFile())
+                    .attach('template', 'test/files/text-file.txt')
                     .then(response => {
                         expect(response.statusCode).toBe(400)
                         expect(response.text).toBe('The template file must use the OpenDocument Text format')
+                    })
+            })
+
+            it ('returns a 400 when context is not specified', () => {
+                return request(app)
+                    .post('/')
+                    .attach('template', 'test/files/odt-file.odt')
+                    .then(response => {
+                        expect(response.statusCode).toBe(400)
+                        expect(response.text).toBe('A context must be sent')
                     })
             })
         })

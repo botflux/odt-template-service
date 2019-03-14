@@ -1,5 +1,7 @@
 const isODT = require('../helpers/is-odt')
 const isJSON = require('../helpers/is-json')
+const bufferToStream = require('../streams/buffer-to-stream')
+const odtTemplate = require('node-odt')
 
 /**
  * Functions used to construct routes are using the pattern make[Method][RouteName].
@@ -53,9 +55,28 @@ const makePostIndex = ({ } = {}) => (req, res) => {
             .send('The passed context is not in JSON format')
     }
 
-    return res.json({
-        message: 'Hi'
+    const contextData = JSON.parse(context)
+
+    const odtHandle = new odtTemplate(template.data)
+
+    odtHandle.renderDoc(contextData, { type: 'stream' }).then(t => {
+        t.pipe(res)
     })
+        // .on('end', doc => {
+        //     console.log('finished')
+        //     res.writeHead(200, {
+        //         'Content-Type': template.mimetype,
+        //         'Content-Disposition': 'attachment;rendered.odt'+template.name,
+        //         'Content-Length': doc.length
+        //     })
+
+        //     res.end(doc, 'binary')
+        // })
+        
+
+    // return res.json({
+    //     message: 'Hi'
+    // })
 }
 
 module.exports = {

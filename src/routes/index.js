@@ -35,6 +35,9 @@ const makePostIndex = ({ } = {}) => (req, res) => {
             .send('A template file must be sent')
     }
 
+    // Displays the sent template
+    console.log(JSON.stringify(template, null, 4))
+
     if (!isODT(template.mimetype)) {
         return res
             .status(400)

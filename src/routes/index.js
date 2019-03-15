@@ -38,7 +38,7 @@ const makePostIndex = ({ } = {}) => (req, res) => {
     const { data, ...rest } = template
 
     // Displays the sent template
-    console.log(JSON.stringify(data, null, 4))
+    console.log(rest)
 
     if (!isODT(template.mimetype)) {
         return res

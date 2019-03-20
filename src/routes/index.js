@@ -32,6 +32,8 @@ const makePostIndex = ({ } = {}) => (req, res) => {
     
     // if template is undefined, null or false we return a response
     if (!template) {
+        console.log('Missing template')
+
         return res
             .status(400)
             .send('A template file must be sent')
@@ -40,9 +42,10 @@ const makePostIndex = ({ } = {}) => (req, res) => {
     const { data, ...rest } = template
 
     // Displays the sent template
-    console.log(rest)
+    // console.log(rest)
 
     if (!isODT(template.mimetype)) {
+        console.log('Wrong mimetype for template')
         return res
             .status(400)
             .send('The template file must use the OpenDocument Text format')
@@ -51,12 +54,14 @@ const makePostIndex = ({ } = {}) => (req, res) => {
     const { context } = req.body
 
     if (!context) {
+        console.log('No context sent')
         return res
             .status(400)
             .send('A context must be sent')
     }
 
     if (!isJSON(context)) {
+        console.log('Context is not a JSON')
         return res
             .status(400)
             .send('The passed context is not in JSON format')

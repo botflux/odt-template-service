@@ -29,10 +29,6 @@
     "express": "^4.16.4",
     "express-fileupload": "^1.1.2-alpha.1",
     "node-odt": "^1.0.1",
-    "odt": "^1.1.0",
-    "simple-xml-dom": "^1.0.0",
-    "unzip": "^0.1.11",
-    "xmldom": "^0.1.27",
-    "yauzl": "^2.10.0"
+    "xmldom": "^0.1.27"
   }
 }

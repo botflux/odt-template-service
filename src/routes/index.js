@@ -1,7 +1,11 @@
 const isODT = require('../helpers/is-odt')
 const isJSON = require('../helpers/is-json')
+const applyData = require('../odt/applyData')
 const bufferToStream = require('../streams/buffer-to-stream')
 const odtTemplate = require('node-odt')
+const admZip = require('adm-zip')
+const zlib = require('zlib')
+const archiver = require('archiver')
 
 /**
  * Functions used to construct routes are using the pattern make[Method][RouteName].
@@ -62,26 +66,28 @@ const makePostIndex = ({ } = {}) => (req, res) => {
 
     const contextData = JSON.parse(context)
 
-    const odtHandle = new odtTemplate(template.data)
+    // the new archive
+    const archive = archiver('zip')
 
-    odtHandle.renderDoc(contextData, { type: 'stream' }).then(t => {
-        t.pipe(res)
-    })
-        // .on('end', doc => {
-        //     console.log('finished')
-        //     res.writeHead(200, {
-        //         'Content-Type': template.mimetype,
-        //         'Content-Disposition': 'attachment;rendered.odt'+template.name,
-        //         'Content-Length': doc.length
-        //     })
+    // we pipe the archive to response, so the response will be streamed
+    archive.pipe(res)
 
-        //     res.end(doc, 'binary')
-        // })
+    // files of the template odt archive
+    const entries = new admZip(template.data).getEntries()
+
+    entries.forEach(e => {
+        let o = { name: e.entryName }
+        let content = e.getData()
+
+        if (e.entryName === 'mimetype') o = { ...o, zlib: { level: zlib.Z_NO_COMPRESSION } } // the mimetype file must not be compressed
+        else if (e.entryName === 'content.xml') content = applyData(content.toString(), contextData) // the content.xml file must be proccessed
         
+        // add the current file to the new archive
+        archive.append(content, o)
+    })
 
-    // return res.json({
-    //     message: 'Hi'
-    // })
+    // tells the archive that there will be no more file to append
+    archive.finalize()
 }
 
 module.exports = {

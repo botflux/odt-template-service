@@ -87,7 +87,7 @@ const makePostIndex = ({ } = {}) => (req, res) => {
         let content = e.getData()
 
         if (e.entryName === 'mimetype') o = { ...o, zlib: { level: zlib.Z_NO_COMPRESSION } } // the mimetype file must not be compressed
-        else if (e.entryName === 'content.xml') content = applyData(content.toString(), contextData) // the content.xml file must be proccessed
+        else if (e.entryName === 'content.xml' || e.entryName === 'style.xml') content = applyData(content.toString(), contextData) // the content.xml file must be proccessed
         
         // add the current file to the new archive
         archive.append(content, o)

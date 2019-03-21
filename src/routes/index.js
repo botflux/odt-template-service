@@ -67,8 +67,12 @@ const makePostIndex = ({ } = {}) => (req, res) => {
             .send('The passed context is not in JSON format')
     }
 
-    const contextData = JSON.parse(context)
+    console.log(
+        'Parameters are valids',
+        context
+    )
 
+    const contextData = JSON.parse(context)
     // the new archive
     const archive = archiver('zip')
 

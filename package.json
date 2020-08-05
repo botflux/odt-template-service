@@ -27,7 +27,7 @@
     "archiver": "^3.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "express-fileupload": "^1.1.2-alpha.1",
+    "express-fileupload": "^1.1.9",
     "xmldom": "^0.1.27"
   }
 }
